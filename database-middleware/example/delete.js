@@ -1,21 +1,20 @@
 const database = require("../../database/database.js");
 
-const updateExample = (request, response, next) => {
+const deleteExample = (request, response, next) => {
     let dbInstance;
     const _id = request.body._id;
-    const example = request.body.example;
 
     database.connect()
         .then(databaseInstance => {
             dbInstance = databaseInstance;
-            return database.updateExample(databaseInstance, _id, example);
+            return database.deleteExample(databaseInstance, _id);
         })
         .then(result => {
-            if (result.modifiedCount === result.modifiedCount) {
+            if (result.deletedCount === 1) {
                 next();
             } else {
-                const error = new Error(`Unable to modify ${_id}`);
-                error.status = 500;
+                const error = new Error(`Unable to delete '${_id}'`);
+                error.status = 404;
                 next(error);
             }
             dbInstance.close();
@@ -26,4 +25,4 @@ const updateExample = (request, response, next) => {
         })
 };
 
-module.exports = updateExample;
+module.exports = deleteExample;

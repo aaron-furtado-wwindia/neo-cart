@@ -1,6 +1,9 @@
 const v$delete = (request, response, next) => {
+    const _id = request.body._id;
+
+    response.status(200);
     response.json({
-        message: `'DELETE' successful`
+        message: `'${_id}' was deleted successfully`
     });
 };
 

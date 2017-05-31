@@ -4,6 +4,7 @@ const example           = express.Router();
 const createMiddleware =  require('./middleware/create');
 const readMiddleware =  require('./middleware/read');
 const updateMiddleware =  require('./middleware/update');
+const deleteMiddleware =  require('./middleware/delete');
 
 const v$post    = require('./post');
 const v$get     = require('./get');
@@ -15,9 +16,9 @@ const v$delete  = require('./delete');
  * */
 
 example.post('/', ...createMiddleware, v$post);      // CREATE
-example.get('/:_id', ...readMiddleware, v$get);        // READ
+example.get('/:_id', ...readMiddleware, v$get);      // READ
 example.put('/', ...updateMiddleware, v$put);        // UPDATE
-example.delete('/', v$delete);  // DELETE
+example.delete('/', ...deleteMiddleware, v$delete);  // DELETE
 
 /**
  * ============================================================================
